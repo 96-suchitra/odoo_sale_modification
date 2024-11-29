@@ -1,0 +1,19 @@
+<odoo>
+    <record id="sale_order_modification" model="ir.ui.view">
+        <field name="name">sale_order_modification</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="manager_reference" groups="!sale_modification.group_sale_admin" readonly="1" force_save="1"/>
+                <field name="manager_reference" groups="sale_modification.group_sale_admin"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="auto_workflow" readonly="state == 'sale'"/>
+            </xpath>
+             <xpath expr="//button[@id='create_invoice']" position="attributes">
+                 <attribute name="invisible">invoice_status != 'to invoice' or auto_workflow</attribute>
+             </xpath>
+        </field>
+    </record>
+</odoo>
